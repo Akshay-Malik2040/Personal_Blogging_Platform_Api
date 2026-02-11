@@ -16,6 +16,6 @@ connectDb().then(() => {
             console.log(`Server is listening at port ${PORT}`);
         })
     } catch (err) {
-        console.log(err.message);
+        console.log("Error "+err.message);
     }
 })
