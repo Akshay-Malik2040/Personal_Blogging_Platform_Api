@@ -32,4 +32,31 @@ const createBlog=async (req,res)=>{
     }
 }
 
-module.exports={getAllBlogs,getBlogById,createBlog}
+const updateBlog=async (req,res)=>{
+    try{
+        const updatedContent=req.body;
+        const id=req.params.id;
+
+        const updatedBlog= await Blog.findByIdAndUpdate(id,updatedContent,{ 
+            returnDocument: 'after', 
+            runValidators: true 
+        });
+
+        if(!updatedBlog) return res.status(404).json({message:"Not found"});
+        res.status(200).json(updatedBlog);
+    }catch(err){
+        res.status(500).json({message:err.message});
+    }
+}
+
+const deleteBlog=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const deleteBlog=await Blog.findByIdAndDelete(id);
+        res.status(200).json({message:"Blog Deleted"});
+    }catch(err){
+        res.status(500).json({message:err.message});
+    }
+}
+
+module.exports={getAllBlogs,getBlogById,createBlog,updateBlog,deleteBlog};
