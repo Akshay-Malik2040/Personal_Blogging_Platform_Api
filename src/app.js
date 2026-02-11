@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express();
 const connectDb = require('./config/db');
+const routes=require('./routes/blogRouter')
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000
+
+app.use(express.json());
+
+app.use('/api/blogs',routes);
 
 connectDb().then(() => {
     try {
